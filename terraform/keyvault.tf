@@ -25,5 +25,5 @@ resource "azurerm_key_vault_secret" "python_sas" {
   azurerm_key_vault_access_policy.self]
   key_vault_id = azurerm_key_vault.kv.id
   name         = "python-sas"
-  value        = data.azurerm_storage_account_blob_container_sas.python_sas.sas
+  value        = "${azurerm_storage_blob.sensors.url}${data.azurerm_storage_account_blob_container_sas.python_sas.sas}"
 }
