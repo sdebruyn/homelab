@@ -12,6 +12,11 @@ resource "azurerm_storage_container" "python" {
   storage_account_name = azurerm_storage_account.sa.name
 }
 
+resource "azurerm_storage_container" "scripts" {
+  name                 = "scripts"
+  storage_account_name = azurerm_storage_account.sa.name
+}
+
 data "azurerm_storage_account_blob_container_sas" "python_sas" {
   depends_on = [
   azurerm_storage_container.python]

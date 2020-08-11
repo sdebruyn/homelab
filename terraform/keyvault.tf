@@ -19,11 +19,3 @@ resource "azurerm_key_vault_access_policy" "self" {
   key_permissions         = local.kv_all_key_permissions
   storage_permissions     = local.kv_all_storage_permissions
 }
-
-resource "azurerm_key_vault_secret" "python_sas" {
-  depends_on = [
-  azurerm_key_vault_access_policy.self]
-  key_vault_id = azurerm_key_vault.kv.id
-  name         = "python-sas"
-  value        = "${azurerm_storage_blob.sensors.url}${data.azurerm_storage_account_blob_container_sas.python_sas.sas}"
-}
