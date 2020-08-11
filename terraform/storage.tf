@@ -17,8 +17,8 @@ data "azurerm_storage_account_blob_container_sas" "python_sas" {
   azurerm_storage_container.python]
   connection_string = azurerm_storage_account.sa.primary_blob_connection_string
   container_name    = azurerm_storage_container.python.name
-  expiry            = timestamp()
-  start             = timeadd(timestamp(), "87600h")
+  expiry            = timeadd(timestamp(), "87600h")
+  start             = timestamp()
   permissions {
     add    = false
     create = false
