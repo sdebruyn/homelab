@@ -19,22 +19,29 @@ jobs:
 
       - name: Python distribute
         run: python setup.py sdist
+        working-directory: python
 
       - name: Terraform Init
         run: terraform init
+        working-directory: terraform
 
       - name: Terraform Format
         run: terraform fmt -check
+        working-directory: terraform
 
       - name: Terraform Validate
         run: terraform validate
+        working-directory: terraform
 
       - name: tflint
         run: docker run --rm -v $(pwd):/data -t wata727/tflint
+        working-directory: terraform
 
       - name: Terraform Plan
         run: terraform plan -input=false -out=tfplan
+        working-directory: terraform
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: terraform apply -auto-approve tfplan
+        working-directory: terraform
