@@ -1,8 +1,9 @@
 locals {
-  name   = "homelab"
+  name   = "homelab${random_string.random_name.result}"
   region = "westeurope"
   tags = {
-    "project" = "homelab"
+    "project" = "homelab",
+    "homelab" = random_string.random_name.result
   }
   kv_all_cert_permissions = [
     "backup",
