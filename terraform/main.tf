@@ -1,11 +1,9 @@
 terraform {
-  backend "remote" {
-    hostname     = "app.terraform.io"
-    organization = "debruyn"
-
-    workspaces {
-      name = "homelab"
-    }
+  backend "azurerm" {
+    resource_group_name  = "rgtfstates"
+    storage_account_name = "tfstatessdb"
+    container_name       = "homelab"
+    key                  = "homelab.tfstate"
   }
 }
 

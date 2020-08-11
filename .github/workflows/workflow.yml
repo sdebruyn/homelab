@@ -17,16 +17,14 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install pycodestyle
+        run: pip install pycodestyle
+
       - name: Check PEP8
         run: pycodestyle --show-source --show-pep8 python
 
       - name: Python distribute
         run: python setup.py sdist
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Terraform Init
         run: terraform init
