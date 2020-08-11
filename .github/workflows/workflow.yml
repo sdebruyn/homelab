@@ -17,12 +17,6 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install pycodestyle
-        run: pip install pycodestyle
-
-      - name: Check PEP8
-        run: pycodestyle --show-source --show-pep8 python
-
       - name: Python distribute
         run: python setup.py sdist
 
