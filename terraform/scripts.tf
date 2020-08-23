@@ -8,7 +8,10 @@ resource "azurerm_storage_blob" "download_install_python" {
   })
 
   provisioner "local-exec" {
-    command = "curl -X POST -sl \"https://${local.server}/homelab-trigger-deployment\" -H \"Content-Type: application/json\" -d '{\"secret\": \"${data.azurerm_key_vault_secret.deployment_secret.value}\"'"
+    command = "curl -X POST -sl \"https://${local.server}/homelab-trigger-deployment\" -H \"Content-Type: application/json\" -d \"{\\\"secret\\\": \\\"$secret\\\"}\""
+    environment = {
+      secret = data.azurerm_key_vault_secret.deployment_secret.value
+    }
   }
 }
 
