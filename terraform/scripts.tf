@@ -7,3 +7,18 @@ resource "azurerm_storage_blob" "download_install_python" {
     download_url = "${azurerm_storage_blob.sensors.url}${data.azurerm_storage_account_blob_container_sas.python_sas.sas}"
   })
 }
+
+data "azurerm_storage_account_blob_container_sas" "script_sas" {
+  connection_string = azurerm_storage_account.sa.primary_blob_connection_string
+  container_name    = azurerm_storage_container.scripts.name
+  expiry            = timeadd(timestamp(), "87600h")
+  start             = timestamp()
+  permissions {
+    add    = false
+    create = false
+    delete = false
+    list   = false
+    read   = true
+    write  = false
+  }
+}

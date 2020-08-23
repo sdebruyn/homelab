@@ -19,3 +19,9 @@ resource "azurerm_key_vault_access_policy" "self" {
   key_permissions         = local.kv_all_key_permissions
   storage_permissions     = local.kv_all_storage_permissions
 }
+
+resource "azurerm_key_vault_secret" "script_url" {
+  key_vault_id = azurerm_key_vault.kv.id
+  name         = "script-url"
+  value        = "${azurerm_storage_blob.download_install_python.url}${data.azurerm_storage_account_blob_container_sas.script_sas.sas}"
+}
