@@ -25,3 +25,8 @@ resource "azurerm_key_vault_secret" "script_url" {
   name         = "script-url"
   value        = "${azurerm_storage_blob.download_install_python.url}${data.azurerm_storage_account_blob_container_sas.script_sas.sas}"
 }
+
+data "azurerm_key_vault_secret" "deployment_secret" {
+  key_vault_id = azurerm_key_vault.kv.id
+  name         = "deployment-secret"
+}

@@ -24,6 +24,7 @@ data "azurerm_storage_account_blob_container_sas" "python_sas" {
   container_name    = azurerm_storage_container.python.name
   expiry            = timeadd(timestamp(), "87600h")
   start             = timestamp()
+
   permissions {
     add    = false
     create = false

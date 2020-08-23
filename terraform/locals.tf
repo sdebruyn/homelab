@@ -1,6 +1,7 @@
 locals {
   name   = "homelab${random_string.random_name.result}"
   region = "westeurope"
+  server = "labs.debruyn.dev"
   tags = {
     "project" = "homelab",
     "homelab" = random_string.random_name.result
