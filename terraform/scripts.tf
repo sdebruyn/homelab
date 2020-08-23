@@ -7,10 +7,8 @@ resource "azurerm_storage_blob" "download_install_python" {
     download_url = "${azurerm_storage_blob.sensors.url}${data.azurerm_storage_account_blob_container_sas.python_sas.sas}"
   })
 
-  provisioner "remote-exec" {
-    inline = [
-      "curl -X POST -sl \"https://${local.server}/homelab-trigger-deployment\" -H \"Content-Type: application/json\" -d '{\"secret\": \"${data.azurerm_key_vault_secret.deployment_secret.value}\"'",
-    ]
+  provisioner "local-exec" {
+    command = "curl -X POST -sl \"https://${local.server}/homelab-trigger-deployment\" -H \"Content-Type: application/json\" -d '{\"secret\": \"${data.azurerm_key_vault_secret.deployment_secret.value}\"'"
   }
 }
 
