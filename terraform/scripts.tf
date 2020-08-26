@@ -6,6 +6,7 @@ resource "azurerm_storage_blob" "download_install_python" {
   source_content = templatefile("${path.module}/../scripts/download_install_python.sh", {
     download_url = "${azurerm_storage_blob.sensors.url}${data.azurerm_storage_account_blob_container_sas.python_sas.sas}"
   })
+  content_type = "text/x-shellscript"
 
   provisioner "local-exec" {
     command = "curl -X POST -sl \"https://${local.server}/homelab-trigger-deployment\" -H \"Content-Type: application/json\" -d \"{\\\"secret\\\": \\\"$secret\\\"}\""
