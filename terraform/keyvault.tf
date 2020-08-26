@@ -3,7 +3,7 @@ resource "azurerm_key_vault" "kv" {
   resource_group_name      = azurerm_resource_group.rg.name
   enabled_for_deployment   = true
   purge_protection_enabled = false
-  soft_delete_enabled      = false
+  soft_delete_enabled      = true
   tags                     = local.tags
   tenant_id                = data.azurerm_client_config.current.tenant_id
   sku_name                 = "standard"
@@ -20,10 +20,10 @@ resource "azurerm_key_vault_access_policy" "self" {
   storage_permissions     = local.kv_all_storage_permissions
 }
 
-resource "azurerm_key_vault_secret" "script_url" {
+resource "azurerm_key_vault_secret" "python_url" {
   key_vault_id = azurerm_key_vault.kv.id
-  name         = "script-url"
-  value        = "${azurerm_storage_blob.download_install_python.url}${data.azurerm_storage_account_blob_container_sas.script_sas.sas}"
+  name         = "python-url"
+  value        = "${azurerm_storage_blob.sensors.url}${data.azurerm_storage_account_blob_container_sas.python_sas.sas}"
 }
 
 data "azurerm_key_vault_secret" "deployment_secret" {
