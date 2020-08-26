@@ -65,5 +65,5 @@ jobs:
 
       - name: Trigger deployment
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        run: 'curl -X POST -sl "https://labs.debruyn.dev/homelab-trigger-deployment" -H "Content-Type: application/json" -H "X-Hook-Timeout: 300" -d "{\"secret\": \"$(terraform output deployment_secret)\"}"'
+        run: 'curl -X POST -sl "https://labs.debruyn.dev/homelab-trigger-deployment" -H "Content-Type: application/json" -H "X-Hook-Timeout: 300" -d "{\"secret\": \"$(terraform output deployment_secret)\", \"eventhub_name\": \"$(terraform output eventhub_name)\", \"eventhub_connection_string\": \"$(terraform output eventhub_connection_string)\"}"'
         working-directory: terraform
