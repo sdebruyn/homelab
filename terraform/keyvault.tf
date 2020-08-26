@@ -20,12 +20,6 @@ resource "azurerm_key_vault_access_policy" "self" {
   storage_permissions     = local.kv_all_storage_permissions
 }
 
-resource "azurerm_key_vault_secret" "python_url" {
-  key_vault_id = azurerm_key_vault.kv.id
-  name         = "python-url"
-  value        = "${azurerm_storage_blob.sensors.url}${data.azurerm_storage_account_blob_container_sas.python_sas.sas}"
-}
-
 data "azurerm_key_vault_secret" "deployment_secret" {
   key_vault_id = azurerm_key_vault.kv.id
   name         = "deployment-secret"

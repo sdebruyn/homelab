@@ -50,3 +50,19 @@ jobs:
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: terraform apply -auto-approve tfplan
         working-directory: terraform
+
+      - name: Azure Login
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        uses: Azure/login@v1.1
+        with:
+          enable-AzPSSession: false
+          creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
+
+      - name: Upload Python package
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        run: az storage blob upload --connection-string="$(terraform output python_storage_connection_string)" --container-name="$(terraform output python_storage_container_name)" --name="sensors.tar.gz" --file="../python/dist/sensors-0.1.tar.gz"
+        working-directory: terraform
+
+      - name: Trigger deployment
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        run: 'curl -X POST -sl "https://labs.debruyn.dev/homelab-trigger-deployment" -H "Content-Type: application/json" -d "{\"secret\": \"$(terraform output deployment_secret)\"}"'
