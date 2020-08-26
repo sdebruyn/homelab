@@ -24,8 +24,8 @@ def get_measurements_as_eventdata() -> EventData:
 
 
 @click.command()
-@click.argument('conn_str')
-@click.argument('name')
+@click.option('--conn_str', help='Connection string of the Azure Event Hub')
+@click.option('--eventhub_name', help='Name of the Azure Event Hub')
 def send_measurements(conn_str, eventhub_name):
     if not conn_str:
         click.echo("Connection string is empty")
