@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 download_url="${download_url}"
 filename="/tmp/package.tar.gz"
