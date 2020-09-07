@@ -15,4 +15,24 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size    = "Standard_D3_v2"
     node_count = 2
   }
+
+  addon_profile {
+    oms_agent {
+      enabled                    = true
+      log_analytics_workspace_id = azurerm_log_analytics_workspace.la.id
+    }
+  }
+}
+
+resource "azurerm_log_analytics_solution" "k8s" {
+  solution_name         = "ContainerInsights"
+  location              = local.region
+  resource_group_name   = azurerm_resource_group.rg.name
+  workspace_resource_id = azurerm_log_analytics_workspace.la.id
+  workspace_name        = azurerm_log_analytics_workspace.la.name
+
+  plan {
+    publisher = "Microsoft"
+    product   = "OMSGallery/ContainerInsights"
+  }
 }
