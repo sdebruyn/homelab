@@ -12,7 +12,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   default_node_pool {
     name       = "default"
-    vm_size    = "Standard_D3_v2"
+    vm_size    = "Standard_D2_v2"
     node_count = 2
     tags       = local.tags
   }
