@@ -1,9 +1,3 @@
-resource "azurerm_resource_group" "aks" {
-  location = local.region
-  name     = "rgaks${local.name}"
-  tags     = local.tags
-}
-
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = "aks${local.name}"
   location            = local.region
