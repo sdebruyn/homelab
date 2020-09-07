@@ -14,9 +14,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   node_resource_group = azurerm_resource_group.aks.name
   dns_prefix          = local.name
 
-  service_principal {
-    client_id     = azuread_application.sp.application_id
-    client_secret = random_password.sp.result
+  identity {
+    type = "SystemAssigned"
   }
 
   default_node_pool {
