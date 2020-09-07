@@ -3,7 +3,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   location            = local.region
   tags                = local.tags
   resource_group_name = azurerm_resource_group.rg.name
-  node_resource_group = azurerm_resource_group.aks.name
+  node_resource_group = "rgaks${local.name}"
   dns_prefix          = local.name
 
   identity {
