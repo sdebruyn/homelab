@@ -6,7 +6,7 @@ resource "random_password" "sp" {
   number  = true
 }
 
-resource "azuread_application" "app" {
+resource "azuread_application" "sp" {
   name = "tf-sp-${local.name}"
   required_resource_access {
     resource_app_id = "e406a681-f3d4-42a8-90b6-c2b029497af1"
@@ -24,16 +24,13 @@ resource "azuread_application" "app" {
   }
 }
 
-resource "azuread_service_principal" "sp" {
-  application_id = azuread_application.app.application_id
-}
-
 resource "time_rotating" "sp" {
   rotation_months = 1
 }
 
-resource "azuread_service_principal_password" "sp" {
-  service_principal_id = azuread_service_principal.sp.id
-  value                = random_password.sp.result
-  end_date             = time_rotating.sp.rotation_rfc3339
+resource "azuread_application_password" "sp" {
+  application_object_id = azuread_application.sp.id
+  description           = "Client secret"
+  value                 = random_password.sp.result
+  end_date              = time_rotating.sp.rotation_rfc3339
 }

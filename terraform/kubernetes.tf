@@ -13,7 +13,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix          = local.name
 
   service_principal {
-    client_id     = azuread_application.app.application_id
+    client_id     = azuread_application.sp.application_id
     client_secret = random_password.sp.result
   }
 
