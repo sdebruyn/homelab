@@ -5,8 +5,6 @@ resource "azurerm_resource_group" "aks" {
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
-  depends_on = [azuread_application_password.sp]
-
   name                = "aks${local.name}"
   location            = local.region
   tags                = local.tags
