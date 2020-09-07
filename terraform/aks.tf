@@ -14,6 +14,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     name       = "default"
     vm_size    = "Standard_D3_v2"
     node_count = 2
+    tags       = local.tags
   }
 
   addon_profile {
@@ -25,6 +26,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
     kube_dashboard {
       enabled = true
     }
+  }
+
+  lifecycle {
+    ignore_changes = [addon_profile.0.oms_agent.0.log_analytics_workspace_id]
   }
 }
 
